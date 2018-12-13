@@ -12,8 +12,9 @@ public static void main(String[] args) {
  */
 public class Action {
     public static void main(String[] args) {
-        Course c = new Course(...); // Создаем полосу препятствий
+        Course c = new Course(); // Создаем полосу препятствий
         Team team = new Team("Лопушки", "Вася", "Петя", "Дима", "Вова");  // Создаем команду
         c.doIt(team);               // Просим команду пройти полосу
         team.showResults();         // Показываем результаты
+    }
 }

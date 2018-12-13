@@ -9,8 +9,10 @@ package ru.lebedev.se.lesson1.sport;
 public class Team {
     String teamName;
     String[] athlete = new String[4];
+    int[] result = new int[4];
+    public static int teamResult;
 
-    public Team(String teamName, String athlete1, String athlete2,String athlete3,String athlete4) {
+    public Team(String teamName, String athlete1, String athlete2, String athlete3, String athlete4) {
         this.teamName = teamName;
         athlete[0] = athlete1;
         athlete[1] = athlete2;
@@ -24,7 +26,15 @@ public class Team {
             System.out.println(athlete[i]);
         }
     }
-    public void showResults(){
 
+    public void showResults() {
+        System.out.println("Команда: " + teamName);
+        for (int i = 0; i < athlete.length; i++) {
+            System.out.println("Спортсмен: " + athlete[i] + " результат: " + result[i]);
+        }
+        for (int i = 0; i < 3; i++) {
+            teamResult = teamResult + result[i];
+        }
+        System.out.println("Итоговый результат: " + teamResult);
     }
 }
