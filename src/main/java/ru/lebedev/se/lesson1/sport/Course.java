@@ -5,22 +5,20 @@ package ru.lebedev.se.lesson1.sport;
 метод, который будет просить команду пройти всю полосу.
  */
 public class Course {
-    int distance; // биатлон. Дистанция - среднее время 10 минут +- 2
-    boolean shoot1; // + 3 выстрела. Промах + 1 минута к результату
-    boolean shoot2;
-    boolean shoot3;
 
-    public Course() {
+    private Step[] step = new Step[4];
+
+    public Course(int distance1, int distance2, int distance3, int distance4) {
+        step[0] = new Step(distance1);
+        step[1] = new Step(distance2);
+        step[2] = new Step(distance3);
+        step[3] = new Step(distance4);
     }
 
     public void doIt(Team team) {
         for (int i = 0; i < 4; i++) {
-            team.result[i] = (int) (8 + (Math.random() * 4));
-            for (int j = 0; j < 2; j++) {
-                if ((Math.random() * 10) <= 2) {
-                    team.result[i] = team.result[i] + 1;
-                }
-            }
+            team.result[i] = step[i].runDistance() + step[i].doShoots();
+            team.shoots[i] = step[i].shotsToString();
         }
     }
 
