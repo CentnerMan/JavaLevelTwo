@@ -10,6 +10,7 @@ public class Team {
     String teamName;
     String[] athlete = new String[4];
     int[] result = new int[4];
+    String[] shoots = new String[4];
     public static int teamResult;
 
     public Team(String teamName, String athlete1, String athlete2, String athlete3, String athlete4) {
@@ -30,11 +31,19 @@ public class Team {
     public void showResults() {
         System.out.println("Команда: " + teamName);
         for (int i = 0; i < athlete.length; i++) {
-            System.out.println("Спортсмен: " + athlete[i] + " результат: " + result[i]);
+            System.out.println("Спортсмен: " + athlete[i] + " результат: " + getTime(result[i]) + ". Отстрелялся: " + shoots[i]);
         }
         for (int i = 0; i < 3; i++) {
             teamResult = teamResult + result[i];
         }
-        System.out.println("Итоговый результат: " + teamResult);
+        System.out.println("Итоговый результат: " + getTime(teamResult));
+    }
+
+    private String getTime(int s) {
+//        int hours = s / 3600;
+        int minutes = (s % 3600) / 60;
+        int seconds = s % 60;
+//        return  hours + "ч " + minutes + "мин " + seconds+ "сек ";
+        return minutes + " минут " + seconds + " секунд";
     }
 }
