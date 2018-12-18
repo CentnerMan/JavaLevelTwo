@@ -1,4 +1,12 @@
 package ru.lebedev.se.exceptions;
 
-public class MyArraySizeException {
+import java.io.IOException;
+
+public class MyArraySizeException extends IOException {
+    public MyArraySizeException() {
+    }
+
+    public MyArraySizeException(String message) {
+        super(message);
+    }
 }
