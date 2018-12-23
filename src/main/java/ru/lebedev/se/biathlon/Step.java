@@ -1,4 +1,4 @@
-package ru.lebedev.se.lesson1.sport;
+package ru.lebedev.se.biathlon;
 
 public class Step {
     private int distance; // Дистанция в км - среднее время пробега 1 км - 180 секунд +- 20 (

@@ -1,4 +1,4 @@
-package ru.lebedev.se.lesson1.sport;
+package ru.lebedev.se.biathlon;
 
 /*
 3.	Добавить класс Course (полоса препятствий), в котором будут находиться: массив препятствий,

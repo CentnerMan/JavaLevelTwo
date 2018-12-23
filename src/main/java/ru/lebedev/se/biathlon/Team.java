@@ -1,4 +1,4 @@
-package ru.lebedev.se.lesson1.sport;
+package ru.lebedev.se.biathlon;
 
 /*
 2.	Добавить класс Team, который будет содержать название команды, массив из 4-х участников

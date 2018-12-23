@@ -1,4 +1,4 @@
-package ru.lebedev.se.lesson1.sport;
+package ru.lebedev.se.biathlon;
 
 /*
 То есть в итоге должно быть что-то вроде:
