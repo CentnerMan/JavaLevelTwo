@@ -19,9 +19,9 @@ public class Step {
 
     public int doShoots() {
         int timeToShoot = 0; //
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 3; i++) {
             timeToShoot = rnd(10, 30);
-            if ((Math.random() * 10) <= 2) { // 20% промаха
+            if (rnd(0, 100) <= 20) { // 20% промаха
                 shoots[i] = false;
                 timeToShoot = timeToShoot + 30; // 30 сек штраф
             } else shoots[i] = true;
