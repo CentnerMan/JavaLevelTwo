@@ -14,6 +14,5 @@ public abstract class Animal {
         System.out.println("Это конструктор класса Animal");
     }
 
-
     public abstract void voice();
 }
