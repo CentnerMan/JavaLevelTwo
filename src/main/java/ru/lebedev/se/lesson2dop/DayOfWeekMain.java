@@ -20,8 +20,9 @@ public class DayOfWeekMain {
 
     public static void main(final String[] args) {
         for (DayOfWeek s : DayOfWeek.values()) {
-            if (getWorkingHours(s) > 0)
-                System.out.println("Today is " + s.name() + ", before the weekend " + getWorkingHours(s) + " hours");
+            int hours = getWorkingHours(s);
+            if (hours > 0)
+                System.out.println("Today is " + s.name() + ", before the weekend " + hours + " hours");
             else System.out.println("The weekend has come. :)");
         }
     }
