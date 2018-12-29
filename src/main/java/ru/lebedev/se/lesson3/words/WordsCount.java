@@ -1,4 +1,4 @@
-package ru.lebedev.se.lesson3;
+package ru.lebedev.se.lesson3.words;
 
 public class WordsCount {
 

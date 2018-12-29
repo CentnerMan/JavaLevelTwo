@@ -1,4 +1,4 @@
-package ru.lebedev.se.lesson3;
+package ru.lebedev.se.lesson3.words;
 
 /*
 Создать массив с набором слов (10-20 слов, должны встречаться повторяющиеся).
@@ -9,6 +9,7 @@ package ru.lebedev.se.lesson3;
 import java.util.ArrayList;
 
 public class WordsArray {
+    // Новогодний набор
     static String[] words = {"пиво", "сало", "хлеб", "сало", "пиво", "пиво", "колбаса", "оливье",
             "шампанское", "селедка", "шампанское", "оливье"};
 
@@ -32,7 +33,7 @@ public class WordsArray {
                 count.add(new WordsCount(words[i]));
             }
         }
-
+        // Выводим список найденных слов
         for (int i = 0; i < count.size(); i++) {
             System.out.println(count.get(i).getWord() + " " + count.get(i).getCount());
         }
