@@ -1,4 +1,4 @@
-package ru.lebedev.se.lesson3;
+package ru.lebedev.se.lesson3.phonebook;
 
 public class Clients {
     private String name;
@@ -27,9 +27,9 @@ public class Clients {
 
     @Override
     public String toString() {
-        return "Clients{" +
-                "name='" + name + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
+        return "Абонент {" +
+                "Фамилия = '" + name + '\'' +
+                ", номер телефона = '" + phoneNumber + '\'' +
                 '}';
     }
 
