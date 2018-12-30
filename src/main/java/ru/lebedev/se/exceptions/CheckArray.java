@@ -15,7 +15,7 @@ MySizeArrayException и MyArrayDataException и вывести результа�
 public class CheckArray {
     public static void main(String[] args) {
 //        String[][] arr = new String[4][4];
-        String[][] arr = {{"1", "2", "3", "4"}, {"1", "7", "3", "4"}, {"1", "2", "6", "4"}, {"1", "2", "3", "4"}};
+        String[][] arr = {{"1", "2", "3", "4"}, {"1", "7", "3", "4"}, {"1", "2", "6", "4"}, {"1", "2", "3", "4"}}; //модно зарандомить
         try {
             System.out.println("Сумма элементов массива равна " + arrFourFour(arr));
 
@@ -33,7 +33,7 @@ public class CheckArray {
         int summ = 0;
         int current = 0;
         if (arrayOfString.length != 4 || arrayOfString[0].length != 4 || arrayOfString[1].length != 4
-                || arrayOfString[2].length != 4 || arrayOfString[3].length != 4)
+                || arrayOfString[2].length != 4 || arrayOfString[3].length != 4) // негибко, однако
             throw new MyArraySizeException("Ошибка. Это не двумерный строковый массив размером 4х4.");
 
         for (int i = 0; i < arrayOfString.length; i++) {
