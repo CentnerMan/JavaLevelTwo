@@ -4,6 +4,8 @@
 
 package ru.lebedev.se.lesson3.game.heroes;
 
+import static ru.lebedev.se.lesson3.game.Tools.rnd;
+
 /*
 Абстрактный класс родитель для создания героев
 */
@@ -26,6 +28,16 @@ public abstract class Hero {
         this.damage = damage;
         this.addHeal = addHeal;
     }
+
+    public Hero() {
+        this.health = rnd(100, 300);
+        this.maxHealth = this.health;
+        this.name = "Безымянный герой";
+        this.damage = rnd(50, 100);
+        this.addHeal = 0;
+    }
+
+    public abstract String randomName();
 
     // метод нанесения удара
     public abstract void hit(Hero hero);
@@ -88,6 +100,10 @@ public abstract class Hero {
 
     public String info() {
         return (name + ": " + (health <= 0 ? "погиб" : "осталось здоровья: " + health) + ", наносимый урон:" + damage + "\n");
+    }
+
+    public String logInfo() {
+        return (name + ", здоровье: " + maxHealth + ", урон: " + damage + "\n");
     }
 
 }
