@@ -22,75 +22,116 @@ public class Fighting extends JFrame {
     private JTextArea command2;
     private JButton start;
     public JTextArea logging;
+    private JButton restart;
+    private JScrollPane leftPan;
+    private JScrollPane rightPan;
 
     // Первичная инициализация
     // счетчик раундов
     int round = 1;
-    int commandCount = 3; // Количество участников команды
+    int commandCount = 20; // Количество участников команды, в принципе, любое
 
     // создаюстся две команды
 
-    Hero[] leftTeam = new Hero[commandCount];
-    int leftTeamCount = 0; // текущее количество героев в левой команде
-    int leftTeamSumHealth = 0; // общее здоровье команды
-    Hero[] rightTeam = new Hero[commandCount];
+    Hero[] leftTeam = new Hero[commandCount + 1];
+    int leftTeamCount = 0; // текущее количество героев в левой команде, оно же указатель на последнего живого
+    int leftTeamDead = commandCount; //Указатель на кладбище левой команды
+
+    Hero[] rightTeam = new Hero[commandCount + 1];
     int rightTeamCount = 0; // текущее количество героев в правой команде
-    int rightTeamSumHealth = 0;
+    int rightTeamDead = commandCount; //Указатель на кладбище правой команды
 
 
     void fightBegin() {
         int randomStep = rnd(1, 2);
         int randomAct;
         do {
-            logging.append("------------- Round " + (round) + " ----------------\n");
             // проходим по всем участникам команды
-            for (int i = 0; i < commandCount; i++) {
-                // рандомно выбираем кто будет первый ходить
-                if (randomStep == 1) {
-                    // если персонаж не доктор, то он может ударить
-                    // если доктор, то он лечит
+            if (randomStep == 1 && leftTeamCount > 0) {
+                logging.append("----------------------------- Раунд " + (round) + " -----------------------------\n");
+
+                for (int i = 0; i < leftTeamCount; i++) {
                     if (leftTeam[i] instanceof Doctor) {
-                        randomAct = rnd(0, leftTeam.length - 1);
-                        logging.append(leftTeam[i].healingStr(leftTeam[randomAct]));
+                        for (int j = 0; j < leftTeamCount; j++) {
+                            if (leftTeam[j].getHealth() < leftTeam[j].getMaxHealth()) {
+                                logging.append((leftTeam[i].healingStr(leftTeam[j])));
+                                break;
+                            }
+                        }
                     } else {
-                        randomAct = rnd(0, rightTeam.length - 1);
+                        randomAct = rnd(0, rightTeamCount - 1);
                         logging.append(leftTeam[i].hitStr(rightTeam[randomAct]));
-                    }
-                } else {
-                    if (rightTeam[i] instanceof Doctor) {
-                        randomAct = rnd(0, rightTeam.length - 1);
-                        logging.append(rightTeam[i].healingStr(rightTeam[randomAct]));
-                    } else {
-                        randomAct = rnd(0, leftTeam.length - 1);
-                        logging.append(rightTeam[i].hitStr(leftTeam[randomAct]));
+                        if (rightTeam[randomAct].getHealth() <= 0) { // если умер от удара - на кладбище
+                            logging.append("Герой противника " + rightTeam[randomAct].getName() + " - уничтожен!\n");
+//                            logging.append(rightTeamCount+" "+rightTeamDead+" "+randomAct+"\n");
+                            if (rightTeamCount > 1) {
+                                rightTeam[rightTeamDead] = rightTeam[randomAct];
+                                rightTeamDead--;
+                                for (int j = randomAct; j < rightTeamCount - 1; j++) { // сдвигаем влево
+                                    rightTeam[j] = rightTeam[j + 1];
+                                }
+                                rightTeamCount--;
+                            } else {
+                                rightTeamCount--;
+                                break;
+                            }
+                        }
                     }
                 }
+                round++;
+                randomStep = 2;
+                if (rightTeamCount <= 0) break;
+            } else {
+                if (randomStep == 2 && rightTeamCount > 0) {
+
+                    logging.append("----------------------------- Раунд " + (round) + " -----------------------------\n");
+
+                    for (int i = 0; i < rightTeamCount; i++) {
+                        if (rightTeam[i] instanceof Doctor) {
+                            for (int j = 0; j < rightTeamCount; j++) {
+                                if (rightTeam[j].getHealth() < rightTeam[j].getMaxHealth()) {
+                                    logging.append((rightTeam[i].healingStr(rightTeam[j])));
+                                    break;
+                                }
+                            }
+                        } else {
+                            randomAct = rnd(0, leftTeamCount - 1);
+                            logging.append(rightTeam[i].hitStr(leftTeam[randomAct]));
+                            if (leftTeam[randomAct].getHealth() <= 0) { // если умер от удара - на кладбище
+                                leftTeam[leftTeamDead] = leftTeam[randomAct];
+                                logging.append("Герой противника " + leftTeam[randomAct].getName() + " - уничтожен!\n");
+                                if (leftTeamCount > 1) {
+                                    leftTeamDead--;
+                                    for (int j = randomAct; j < leftTeamCount - 1; j++) { // сдвигаем влево
+                                        leftTeam[j] = leftTeam[j + 1];
+                                    }
+                                    leftTeamCount--;
+                                } else {
+                                    leftTeamCount--;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    round++;
+                    randomStep = 1;
+                }
+                if (leftTeamCount <= 0) break;
             }
-            if (randomStep == 1) randomStep = 2; // Передаем ход другой команде
-            else randomStep = 1;
-            // Считаем суммарное здоровье команды
-            leftTeamSumHealth = 0;
-            rightTeamSumHealth = 0;
-            for (int k = 0; k < commandCount; k++) {
-                leftTeamSumHealth += leftTeam[k].getHealth();
-                rightTeamSumHealth += rightTeam[k].getHealth();
+        } while (leftTeamCount > 0 && rightTeamCount > 0); // while have live heroes
+
+
+        logging.append("-----------------------------------------\n");
+        if (leftTeamCount > 0) {
+            logging.append("Победила 1 команда\nОстались в живых:\n");
+            for (int i = 0; i < leftTeamCount; i++) {
+                logging.append(leftTeam[i].getName() + ", осталось здоровья " + leftTeam[i].getHealth() + " из " + leftTeam[i].getMaxHealth() + "\n");
             }
-            round++; // next round
-        } while (leftTeamSumHealth > 0 && rightTeamSumHealth > 0); // while have live heroes
-
-        logging.append("-----------------------------------------\n");
-        if (leftTeamSumHealth > 0) logging.append("Победила 1 команда\n");
-        else logging.append("Победила 2 команда\n");
-        logging.append("-----------------------------------------\n");
-
-        for (Hero t1 : leftTeam) {
-            logging.append(t1.info());
-        }
-
-        logging.append("-----------------------------------------\n");
-
-        for (Hero t2 : rightTeam) {
-            logging.append(t2.info());
+        } else {
+            logging.append("Победила 2 команда\nОстались в живых:\n");
+            for (int i = 0; i < rightTeamCount; i++) {
+                logging.append(rightTeam[i].getName() + ", осталось здоровья " + rightTeam[i].getHealth() + " из " + rightTeam[i].getMaxHealth() + "\n");
+            }
         }
     }
 
@@ -99,16 +140,16 @@ public class Fighting extends JFrame {
         setContentPane(panelka);
         command1.append("\n--------------------------------\n"); // добавляем в поле текст
         command2.append("\n--------------------------------\n"); // добавляем в поле текст
-        logging.append("\n----------------------------------\n"); // добавляем в поле битвы текст
+        logging.append("\n---------------------------------------\n"); // добавляем в поле битвы текст
         //---------------------------------------------------------------------------------------------
-        comboBox1.addItem("Тигрил");
-        comboBox1.addItem("Акали");
-        comboBox1.addItem("Жанна");
+        comboBox1.addItem("Воин");
+        comboBox1.addItem("Ассасин");
+        comboBox1.addItem("Жрец");
 
         //---------------------------------------------------------------------------------------------
-        comboBox2.addItem("Минотавр");
-        comboBox2.addItem("Джинкс");
-        comboBox2.addItem("Зои");
+        comboBox2.addItem("Воин");
+        comboBox2.addItem("Ассасин");
+        comboBox2.addItem("Жрец");
 
         //---------------------------------------------------------------------------------------------
         pack();
@@ -124,16 +165,19 @@ public class Fighting extends JFrame {
                     leftTeamCount++;
                     switch (comboBox1.getSelectedIndex()) {
                         case 0:
-                            leftTeam[leftTeamCount - 1] = new Warrior(250, "Тигрил", 50, 0);
-                            command1.append(leftTeam[leftTeamCount - 1].info());
+                            leftTeam[leftTeamCount - 1] = new Warrior();
+                            command1.append(leftTeamCount + ". ");
+                            command1.append(leftTeam[leftTeamCount - 1].logInfo());
                             break;
                         case 1:
-                            leftTeam[leftTeamCount - 1] = new Assasin(150, "Акали", 70, 0);
-                            command1.append(leftTeam[leftTeamCount - 1].info());
+                            leftTeam[leftTeamCount - 1] = new Assasin();
+                            command1.append(leftTeamCount + ". ");
+                            command1.append(leftTeam[leftTeamCount - 1].logInfo());
                             break;
                         case 2:
-                            leftTeam[leftTeamCount - 1] = new Doctor(120, "Жанна", 0, 60);
-                            command1.append(leftTeam[leftTeamCount - 1].info());
+                            leftTeam[leftTeamCount - 1] = new Doctor();
+                            command1.append(leftTeamCount + ". ");
+                            command1.append(leftTeam[leftTeamCount - 1].logInfo());
                             break;
                     }
                 } else {
@@ -152,16 +196,19 @@ public class Fighting extends JFrame {
                     rightTeamCount++;
                     switch (comboBox2.getSelectedIndex()) {
                         case 0:
-                            rightTeam[rightTeamCount - 1] = new Warrior(290, "Минотавр", 60, 0);
-                            command2.append(rightTeam[rightTeamCount - 1].info());
+                            rightTeam[rightTeamCount - 1] = new Warrior();
+                            command2.append(rightTeamCount + ". ");
+                            command2.append(rightTeam[rightTeamCount - 1].logInfo());
                             break;
                         case 1:
-                            rightTeam[rightTeamCount - 1] = new Assasin(160, "Джинкс", 90, 0);
-                            command2.append(rightTeam[rightTeamCount - 1].info());
+                            rightTeam[rightTeamCount - 1] = new Assasin();
+                            command2.append(rightTeamCount + ". ");
+                            command2.append(rightTeam[rightTeamCount - 1].logInfo());
                             break;
                         case 2:
-                            rightTeam[rightTeamCount - 1] = new Doctor(110, "Зои", 0, 80);
-                            command2.append(rightTeam[rightTeamCount - 1].info());
+                            rightTeam[rightTeamCount - 1] = new Doctor();
+                            command2.append(rightTeamCount + ". ");
+                            command2.append(rightTeam[rightTeamCount - 1].logInfo());
                             break;
                     }
                 } else {
@@ -175,15 +222,37 @@ public class Fighting extends JFrame {
         start.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (leftTeamCount<3 || rightTeamCount<3){
-                    logging.append("В командах должно быть по 3 героя\n");
+
+                if (leftTeamCount < 1 || rightTeamCount < 1) {
+                    logging.append("В командах должен быть хотя бы 1 герой\n");
                 } else {
+                    logging.setText("\n");
                     logging.append("--------Да начнется битва--------\n\n");
                     fightBegin();
                 }
             }
         });
         //---------------------------------------------------------------------------------------------
+        restart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                button1.setVisible(true);
+                button2.setVisible(true);
+                logging.setText("");
+                logging.append("\n-------------------------------------------\n"); // добавляем в поле битвы текст
+                command1.setText("");
+                command1.append("Команда 1\n");
+                command1.append("\n--------------------------------\n"); // добавляем в поле текст
+                command2.setText("");
+                command2.append("Команда 2\n");
+                command2.append("\n--------------------------------\n"); // добавляем в поле текст
+                leftTeamCount = 0;
+                leftTeamDead = commandCount;
+                rightTeamCount = 0;
+                rightTeamDead = commandCount;
+                round = 1;
+            }
+        });
 
         setVisible(true);
     }
