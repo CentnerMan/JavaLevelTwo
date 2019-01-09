@@ -136,7 +136,7 @@ public class Fighting extends JFrame {
     }
 
     public Fighting() throws HeadlessException {
-        super("Fighting!");
+        super("Битва героев!");
         setContentPane(panelka);
         command1.append("\n--------------------------------\n"); // добавляем в поле текст
         command2.append("\n--------------------------------\n"); // добавляем в поле текст
