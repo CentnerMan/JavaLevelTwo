@@ -2,7 +2,7 @@
  * Copyright (c) 2019. Created by Anatoly Lebedev
  */
 
-package ru.lebedev.se.lesson4;
+package ru.lebedev.se.lesson4.Swing;
 
 /**
  * @author Anatoly Lebedev
