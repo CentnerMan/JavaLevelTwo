@@ -1,4 +1,8 @@
-package sample;
+/*
+ * Copyright (c) 2019. Created by Anatoly Lebedev
+ */
+
+package ru.lebedev.se.lesson4.JavaFX.sample;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

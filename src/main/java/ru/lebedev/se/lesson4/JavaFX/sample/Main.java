@@ -1,4 +1,8 @@
-package sample;
+/*
+ * Copyright (c) 2019. Created by Anatoly Lebedev
+ */
+
+package ru.lebedev.se.lesson4.JavaFX.sample;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
