@@ -13,11 +13,15 @@ public class ParallelArray {
     static long timeToStart;
     static long timeToEnd;
 
+    // Заполняем массив 1
+
     public static void initializeArray(float[] arr) {
         for (int i = 0; i < arr.length; i++) {
             arr[i] = 1f;
         }
     }
+
+    // Функция рассчета
 
     public static void calcAnything(float[] arr) {
         for (int i = 0; i < arr.length; i++) {
@@ -26,26 +30,13 @@ public class ParallelArray {
         }
     }
 
-    // Считаем одним потоком
-    static void SingleThreadArrayTimeMeasuring() {
-        // заполняем массив единицами
-        initializeArray(arr);
-        timeToStart = System.currentTimeMillis(); // засекаем начальное время
+    // Разделяем массив на 2 и считаем в 2 потока
 
-        calcAnything(arr);
+    public static float[] TwoThreadCalc(float[] arr) {
+        int h = arr.length / 2;
 
-        timeToEnd = System.currentTimeMillis(); // засекаем конечное время
-        System.out.println("Однопоточный режим: " + (timeToEnd - timeToStart)); // Выводим время выполнения процесса
-    }
-
-    static void MultipleThreadArrayTimeMeasuring() {
-        initializeArray(arr);
         float[] a1 = new float[h];
-        float[] a2 = new float[h];
-
-        timeToStart = System.currentTimeMillis(); // Засекаем время
-
-        // Делим на threads потоков
+        float[] a2 = new float[arr.length - h];
 
         System.arraycopy(arr, 0, a1, 0, h);
         System.arraycopy(arr, h, a2, 0, h);
@@ -68,6 +59,32 @@ public class ParallelArray {
         // Склеиваем
         System.arraycopy(a1, 0, arr, 0, h);
         System.arraycopy(a2, 0, arr, h, h);
+        return arr;
+    }
+
+    // Считаем одним потоком
+
+    static void SingleThreadArrayTimeMeasuring() {
+        // заполняем массив единицами
+        initializeArray(arr);
+        timeToStart = System.currentTimeMillis(); // засекаем начальное время
+
+        calcAnything(arr);
+
+        timeToEnd = System.currentTimeMillis(); // засекаем конечное время
+        System.out.println("Однопоточный режим: " + (timeToEnd - timeToStart)); // Выводим время выполнения процесса
+    }
+
+    // Считаем в несколько потоков
+
+    static void MultipleThreadArrayTimeMeasuring() {
+        initializeArray(arr);
+
+        timeToStart = System.currentTimeMillis(); // Засекаем время
+
+        // Делим на threads потоков
+
+        TwoThreadCalc(arr);
 
         timeToEnd = System.currentTimeMillis(); // засекаем конечное время
         System.out.println("Многопоточный режим: " + (timeToEnd - timeToStart)); // Выводим время выполнения процесса
@@ -75,9 +92,14 @@ public class ParallelArray {
 
 
     public static void main(String[] args) {
+
         // Однопоточный режим
+
         SingleThreadArrayTimeMeasuring();
+
         // Многопоточный режим
+
         MultipleThreadArrayTimeMeasuring();
+
     }
 }
