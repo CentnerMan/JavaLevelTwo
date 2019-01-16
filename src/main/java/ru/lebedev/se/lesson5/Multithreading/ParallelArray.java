@@ -21,12 +21,12 @@ public class ParallelArray {
         }
     }
 
-    // Функция рассчета
+    // Функция рассчета, h - сдвиг для расчета
 
-    public static void calcAnything(float[] arr) {
+    public static void calcAnything(float[] arr, int h) {
         for (int i = 0; i < arr.length; i++) {
-            arr[i] = (float) (arr[i] * Math.sin(0.2f + i / 5)
-                    * Math.cos(0.2f + i / 5) * Math.cos(0.4f + i / 2));
+            arr[i] = (float) ((arr[i] + h) * Math.sin(0.2f + (i + h) / 5)
+                    * Math.cos(0.2f + (i + h) / 5) * Math.cos(0.4f + (i + h) / 2));
         }
     }
 
@@ -39,13 +39,13 @@ public class ParallelArray {
         float[] a2 = new float[arr.length - h];
 
         System.arraycopy(arr, 0, a1, 0, h);
-        System.arraycopy(arr, h, a2, 0, h);
+        System.arraycopy(arr, h, a2, 0, arr.length - h);
         // Считаем
         Thread t1 = new Thread(() -> {
-            calcAnything(a1);
+            calcAnything(a1, 0);
         });
         Thread t2 = new Thread(() -> {
-            calcAnything(a2);
+            calcAnything(a2, h);
         });
         t1.start();
         t2.start();
@@ -69,7 +69,7 @@ public class ParallelArray {
         initializeArray(arr);
         timeToStart = System.currentTimeMillis(); // засекаем начальное время
 
-        calcAnything(arr);
+        calcAnything(arr, 0);
 
         timeToEnd = System.currentTimeMillis(); // засекаем конечное время
         System.out.println("Однопоточный режим: " + (timeToEnd - timeToStart)); // Выводим время выполнения процесса
