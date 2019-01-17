@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-
+<!--
+  ~ Copyright (c) 2019. Created by Anatoly Lebedev
+  -->
 
 <VBox alignment="center" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.121"
-      fx:controller="Lesson_6.Client.Controller">
+      fx:controller="ru.lebedev.se.NetworkChat.Client.Controller">
 
 
     <TextArea fx:id="textArea" editable="false" VBox.vgrow="ALWAYS" />

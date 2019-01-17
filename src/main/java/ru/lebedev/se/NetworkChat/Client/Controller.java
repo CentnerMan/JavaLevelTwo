@@ -1,9 +1,11 @@
-package Lesson_6.Client;
+/*
+ * Copyright (c) 2019. Created by Anatoly Lebedev
+ */
+
+package ru.lebedev.se.NetworkChat.Client;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.PointLight;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 

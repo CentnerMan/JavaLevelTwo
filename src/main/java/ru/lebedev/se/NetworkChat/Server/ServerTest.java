@@ -1,14 +1,14 @@
-package Lesson_6.Server;
+/*
+ * Copyright (c) 2019. Created by Anatoly Lebedev
+ */
 
-import Lesson_6.Client.ClientHandler;
+package ru.lebedev.se.NetworkChat.Server;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import ru.lebedev.se.NetworkChat.Client.ClientHandler;
+
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 import java.util.Vector;
 
 public class ServerTest {

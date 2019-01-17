@@ -1,6 +1,10 @@
-package Lesson_6.Client;
+/*
+ * Copyright (c) 2019. Created by Anatoly Lebedev
+ */
 
-import Lesson_6.Server.ServerTest;
+package ru.lebedev.se.NetworkChat.Client;
+
+import ru.lebedev.se.NetworkChat.Server.ServerTest;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
