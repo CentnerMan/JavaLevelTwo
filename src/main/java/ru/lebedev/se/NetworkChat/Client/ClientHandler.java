@@ -1,8 +1,8 @@
+package ru.lebedev.se.NetworkChat.Client;
+
 /*
  * Copyright (c) 2019. Created by Anatoly Lebedev
  */
-
-package ru.lebedev.se.NetworkChat.Client;
 
 import ru.lebedev.se.NetworkChat.Server.ServerTest;
 
@@ -18,7 +18,7 @@ public class ClientHandler {
     private DataInputStream in;
     private ServerTest server;
 
-    public ClientHandler(ServerTest server, Socket socket) {
+    public ClientHandler(final ServerTest server, final Socket socket) {
         try {
             this.socket = socket;
             this.server = server;

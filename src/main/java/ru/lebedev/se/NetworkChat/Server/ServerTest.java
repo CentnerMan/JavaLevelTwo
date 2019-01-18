@@ -1,8 +1,9 @@
+package ru.lebedev.se.NetworkChat.Server;
+
 /*
  * Copyright (c) 2019. Created by Anatoly Lebedev
  */
 
-package ru.lebedev.se.NetworkChat.Server;
 
 import ru.lebedev.se.NetworkChat.Client.ClientHandler;
 

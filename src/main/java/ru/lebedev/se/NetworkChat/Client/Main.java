@@ -1,8 +1,8 @@
+package ru.lebedev.se.NetworkChat.Client;
+
 /*
  * Copyright (c) 2019. Created by Anatoly Lebedev
  */
-
-package ru.lebedev.se.NetworkChat.Client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
